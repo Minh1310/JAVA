@@ -35,7 +35,7 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("2");
-                    student.listFindByName(listStudent);
+                    student.listFindByTexts(listStudent);
                     break;
                 case 3:
                     System.out.println("3");

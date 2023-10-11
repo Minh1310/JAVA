@@ -60,7 +60,7 @@ public class Report {
     }
 
     public void display(){
-        System.out.printf("|%10s |10%s |10%s ", name, courseName, totalOfCourse );
+        System.out.printf("|%10s |%10s |%10s ", name, courseName, totalOfCourse );
         System.out.println();
     }
     

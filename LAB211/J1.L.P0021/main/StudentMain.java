@@ -8,7 +8,8 @@ import entity.Student;
 import validation.Validation;
 
 public class StudentMain{
-    StudentBO action = new StudentBO();
+
+    private StudentBO action = new StudentBO();
     /**
      * Use to get new student from input
      * 
@@ -43,23 +44,21 @@ public class StudentMain{
     }
     
     /**
-     * Use to find student list find by name
+     * Use to find student list find by texts
      * 
      * @param list list about information of student take from input
-     * @return
      */
-    public ArrayList<Student> listFindByName(ArrayList<Student> list){
-        ArrayList<Student> listFind = new ArrayList<>();
+    public void listFindByTexts(ArrayList<Student> list){
         String name = Validation.getString(
-                    "Enter student name: ", 
+                    "Enter your texts: ", 
                     "Must follow fomat: HE171754", 
                     "Your ID not valid", 
                     "^[a-zA-Z]{1,}$");
         if(list.isEmpty()){
             System.out.println("List is empty");
-            return null;
+            return;
         }
-        return action.listFindByName(listFind, name);         
+        action.display(action.search(list, name));       
     }
     
     /**

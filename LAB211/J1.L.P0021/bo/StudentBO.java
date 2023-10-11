@@ -55,21 +55,54 @@ public class StudentBO {
      * 
      * @param list list about information of student take from input
      */
-    public  ArrayList<Student> listFindByName(ArrayList<Student> list, String name){
+    public  ArrayList<Student> search(ArrayList<Student> list, String text){
         ArrayList<Student> listFind = new ArrayList<>();
-        // Loop to get list student find by name
-        for (int i = 0; i< list.size(); i++) {
-            if (list.get(i).getStudentName().contains(name)) {
-                listFind.add(list.get(i));
-            }
+        int choice;
+        System.out.println("1. Search by ID");
+        System.out.println("2. Search by name");
+        System.out.println("3. Search by semester");
+        System.out.println("4. Search by course name");
+        choice = Validation.getInt(
+            "Enter your choice", 
+            "Out of range", 
+            "Invalid numbe", 
+            1, 4);
+        switch(choice){
+            case 1:
+                for (int i = 0; i< list.size(); i++) {
+                    if (list.get(i).getId().contains(text)) {
+                    listFind.add(list.get(i));
+                    }
+                }
+                break;
+            case 2:
+                for (int i = 0; i< list.size(); i++) {
+                    if (list.get(i).getStudentName().contains(text)) {
+                    listFind.add(list.get(i));
+                    }
+                }
+                break;
+            case 3:
+                for (int i = 0; i< list.size(); i++) {
+                    if (list.get(i).getSemester().contains(text)) {
+                    listFind.add(list.get(i));
+                    }
+                }
+                break;
+            case 4:
+                for (int i = 0; i< list.size(); i++) {
+                    if (list.get(i).getCourseName().contains(text)) {
+                    listFind.add(list.get(i));
+                    }
+                }
+                break;
         }
+        
         if(listFind.isEmpty()){
-            System.out.println("Not exist this name");
+            System.out.println("Not exist this text");
             return null;
         }
-        // Sort by name
-        listFind.sort((o1, o2)
-                -> o1.getStudentName().compareTo(o2.getStudentName()));
+        sort(listFind);
         return listFind;    
     }
     
@@ -137,6 +170,38 @@ public class StudentBO {
                     break;
             }
         }    
+    }
+    /**
+     * 
+     */
+    public void sort(ArrayList<Student> list){
+        System.out.println("1. Sort by ID");
+        System.out.println("2. Sort by name");
+        System.out.println("3. Sort by semester");
+        System.out.println("4. Sort by course name");
+        int choice = Validation.getInt(
+            "Enter your choice", 
+            "Out of range", 
+            "Invalid numbe", 
+            1, 4);
+        switch(choice){
+            case 1:
+                list.sort((o1, o2)
+                -> o1.getId().compareTo(o2.getId()));
+                break;
+            case 2:
+                list.sort((o1, o2)
+                -> o1.getStudentName().compareTo(o2.getStudentName()));
+                break;
+            case 3:
+                list.sort((o1, o2)
+                -> o1.getSemester().compareTo(o2.getSemester()));
+                break;
+            case 4:
+                list.sort((o1, o2)
+                -> o1.getCourseName().compareTo(o2.getCourseName()));
+                break;
+        }
     }
 
     /**
