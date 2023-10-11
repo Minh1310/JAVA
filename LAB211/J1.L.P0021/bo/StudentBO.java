@@ -103,9 +103,8 @@ public class StudentBO {
                                    1, 4);
             switch(choice){
                 case 1:
-                    System.out.println("Input your name: ");
                     String newName = Validation.getString(
-                                        "Enter student name: ", 
+                                        "Enter new student name: ", 
                                         "Your name just have character and digit", 
                                         "Your ID not valid", 
                                         Constant.CONDITION_STUDENT_NAME
@@ -114,9 +113,8 @@ public class StudentBO {
                     System.out.println("Update name oki");
                     break;
                 case 2: 
-                    System.out.println("Input your semester");
                     String semester = Validation.getString(
-                                   "Enter your semester: ", 
+                                   "Enter new your semester: ", 
                                    "Your semester just have character and digit", 
                                    "Your ID not valid", 
                                    Constant.CONDITION_SEMESTER
@@ -125,9 +123,8 @@ public class StudentBO {
                     System.out.println("Update semester oki");
                      break;
                 case 3:
-                    System.out.println("input course");
                     String courseName = Validation.getString(
-                                        "Enter your course name: ", 
+                                        "Enter new your course name: ", 
                                         "Must follow fomat: JAVA, .NET, C/C++", 
                                         "Your ID not valid", 
                                         Constant.CONDITION_COURSE_NAME

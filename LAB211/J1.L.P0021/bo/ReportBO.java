@@ -50,4 +50,12 @@ public class ReportBO {
             }
         }
     }
+
+    /**
+     * 
+     * @param list
+     */
+    public void display(ArrayList<Report> list){
+        list.forEach((Report a) -> {a.display();});
+    }
 }

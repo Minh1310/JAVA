@@ -35,6 +35,7 @@ public class ReportMain{
             System.out.println("Dont have information about this course");
         }
         action.checkRepeat(listReport);
+        action.display(listReport);
         listReport.clear();   
     }
 }
