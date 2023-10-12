@@ -80,11 +80,11 @@ public class Matrix {
     /**
      * Use to addition two matrix
      */
-    public void addition() {
+    public int[][] addition() {
         if (matrix1.length != matrix2.length
             | matrix1[0].length != matrix2[0].length) {
             System.out.println("Cant substraction two this matrix");
-            return;
+            return null;
         }
         resultMatrix = new int[lengthRow][lengthColumn];
         for (int i = 0; i < lengthRow; i++) {
@@ -92,16 +92,17 @@ public class Matrix {
                 resultMatrix[i][j] = matrix1[i][j] + matrix2[i][j];
             }
         }
+        return resultMatrix;
     }
     
     /**
      * Use to subtraction two matrix
      */
-    public void subtraction() {
+    public int[][] subtraction() {
         if (matrix1.length != matrix2.length
             | matrix1[0].length != matrix2[0].length) {
             System.out.println("Cant subtraction two this matrix");
-            return;
+            return null;
         }
         resultMatrix = new int[lengthRow][lengthColumn];
         for (int i = 0; i < lengthRow; i++) {
@@ -109,15 +110,16 @@ public class Matrix {
                 resultMatrix[i][j] = matrix1[i][j] - matrix2[i][j];
             }
         }
+        return resultMatrix;
     }
     
     /**
      * Use to multiplication two matrix
      */
-    public void multiplication(){
+    public int[][] multiplication(){
         if(matrix1[0].length != matrix2.length){
             System.out.println("Cant multiplication two this matrix");
-            return;
+            return null;
         }
         resultMatrix = new int[matrix1.length][matrix2[0].length];
         for (int i = 0; i < matrix1.length ; i++) {
@@ -131,6 +133,7 @@ public class Matrix {
                 resultMatrix[i][j] = result;
             }
         }
+        return resultMatrix;
     }
     
     /**
@@ -138,24 +141,28 @@ public class Matrix {
      * 
      * @param operator is the calculation between two matrices like: +,-,*
      */
-    public void display(String operator){
-        if(resultMatrix==null){
+    public void display(int [][]a,String operator){
+        if(a == null){
             System.out.println("Error dimention");
             return;
         }
-        display();
+        display(matrix1);
         System.out.println(operator);
-        display();
+        display(matrix2);
         System.out.println("=");
-        display();
+        display(a);
     }
     
     /**
      * Use to display  matrix
      */
-    public void display(){
-        for (int[] ls : resultMatrix) {
-            for (int j = 0; j < resultMatrix[0].length; j++) {
+    public void display(int[][] a){
+        if(a == null){
+            System.out.println("Null");
+            return;
+        }
+        for (int[] ls : a) {
+            for (int j = 0; j < a[0].length; j++) {
                 System.out.print("[" + ls[j] + "]");
             }
             System.out.println("");

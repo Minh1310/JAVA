@@ -14,12 +14,14 @@ import validation.Validation;
  */
 public class Main {
     public static void main(String[] args){
+        int choice;
+        do{
         Matrix matrix = new Matrix();
         System.out.println("1. Addition");
         System.out.println("2. Sucstraction");
         System.out.println("3. Multiplication");
         System.out.println("4. Exist");
-        int choice = Validation.getInt(
+         choice = Validation.getInt(
                         "Enter your choice", 
                         "Must 1 to 4!", 
                         "Invalid number", 
@@ -27,23 +29,23 @@ public class Main {
         switch(choice){
             case 1:
                 matrix.getMatrix();
-                matrix.addition();
-                matrix.display("+");
+                
+                matrix.display(matrix.addition(),"+");
                 break;
             case 2:
                 matrix.getMatrix();
-                matrix.subtraction();
-                matrix.display("-");
+               
+                matrix.display( matrix.subtraction(),"-");
                 break;
             case 3:
                 matrix.getMatrix();
                 matrix.multiplication();
-                matrix.display("x");
+                matrix.display(matrix.multiplication(),"x");
                 break;
             case 4:
                 System.out.println("Exist program");
                 break;
         }
 
-    }
-}
+    }while(choice!=4);
+}}
