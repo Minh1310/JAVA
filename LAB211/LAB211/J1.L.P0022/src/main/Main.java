@@ -6,12 +6,13 @@
 package main;
 
 import java.util.ArrayList;
-
-import entity.Candidate;
+import bo.ExperienceBO;
+import bo.FresherBO;
+import bo.InternBO;
+import constant.Constant;
 import entity.Experience;
 import entity.Fresher;
 import entity.Intern;
-import logic.Management;
 import validation.Validation;
 
 /**
@@ -24,7 +25,10 @@ public class Main {
         ArrayList<Experience> expList = new ArrayList<>();
         ArrayList<Fresher> freList = new ArrayList<>();
         ArrayList<Intern> intList = new ArrayList<>();
-        Management manage = new Management();
+        ExperienceBO exp = new ExperienceBO();
+        InternBO inte = new InternBO();
+        FresherBO fre = new FresherBO();
+        
         System.out.println("minh");
         int choice;
         do{
@@ -40,29 +44,37 @@ public class Main {
                 1,5);
             switch(choice){
                 case 1:
-                    manage.display(expList);
-                    manage.addExperience(expList);
-                    manage.display(expList);
+                    exp.display(expList);
+                    exp.add(expList);
+                    exp.display(expList);
                     break;
                 case 2:
-                    manage.display(freList);
-                    manage.addFresher(freList);
-                    manage.display(freList);
+                    fre.display(freList);
+                    fre.add(freList);
+                    fre.display(freList);
                     break;
                 case 3:
-                    manage.display(intList);
-                    manage.addIntern(intList);
-                    manage.display(intList);
+                    inte.display(intList);
+                    inte.add(intList);
+                    inte.display(intList);
                     break;
                 case 4:
                     System.out.println("------Experience------");
-                    manage.display(expList);
+                    exp.display(expList);
                     System.out.println("------Fresher------");
-                    manage.display(freList);
+                    fre.display(freList);
                     System.out.println("------Intern------");
-                    manage.display(intList);
+                    inte.display(intList);
                     System.out.println("-------------------");
-                    manage.search(expList,freList,intList);
+                    String name = Validation.getString(
+                        "Enter your first name or last name : ", 
+                        "Must have(a-zA-Z)", 
+                        "Invalid string", 
+                        Constant.REGEX_NAME
+                    ).toLowerCase();
+                    exp.display(exp.search(expList,name));
+                    fre.display(fre.search(freList, name));
+                    inte.display(inte.search(intList, name));
                     break;
                 case 5:
                     break;

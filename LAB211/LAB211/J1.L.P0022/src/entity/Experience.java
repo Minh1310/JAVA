@@ -5,6 +5,9 @@
  */
 package entity;
 
+import constant.Constant;
+import validation.Validation;
+
 /**
  *
  * @author Nhat Anh
@@ -26,7 +29,7 @@ public class Experience extends Candidate  {
         this.yearOfExp = yearOfExp;
         this.proSkill = proSkill;
     }
-
+    
     public int getYearOfExp() {
         return yearOfExp;
     }
@@ -51,14 +54,27 @@ public class Experience extends Candidate  {
 
     @Override
     public void input() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'input'");
+        super.input();
+        int yearOfExp = Validation.getInt(
+                    "Enter year of experience: ", 
+                    "It's invalid experience", 
+                    "Invalid number", 
+                    0,100
+        );
+        String proSkill = Validation.getString(
+                    "Enter professional skill: ", 
+                    "Must follow format", 
+                    "Invalid string", 
+                    Constant.REGEX_NORMAL
+        );
+        this.yearOfExp = yearOfExp;
+        this.proSkill = proSkill;
     }
 
     @Override
     public void display() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'display'");
+        super.display();
+        System.out.printf("|%3s |%10s",yearOfExp,proSkill);
     }
 
     

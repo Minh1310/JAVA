@@ -5,6 +5,9 @@
  */
 package entity;
 
+import constant.Constant;
+import validation.Validation;
+
 /**
  *
  * @author Nhat Anh
@@ -59,16 +62,33 @@ public class Intern extends Candidate {
 
     @Override
     public void display() {
-        // TODO Auto-generated method stub
         super.display();
+        System.out.printf("|%10s |%10s |%10s",majors,semester,universityName);
     }
 
     @Override
     public void input() {
-        // TODO Auto-generated method stub
         super.input();
+        String major = Validation.getString(
+                    "Enter your majoy: ", 
+                    "Must follow fomat", 
+                    "Invalid string", 
+                    Constant.REGEX_NAME
+        ); 
+        String semester = Validation.getString(
+                    "Enter your semester: ", 
+                    "Must follow fomat", 
+                    "Invalid string", 
+                    Constant.REGEX_NORMAL
+        ); 
+        String nameUniversity = Validation.getString(
+                    "Enter your university name: ", 
+                    "Must follow fomat", 
+                    "Invalid string", 
+                    Constant.REGEX_NAME
+        );
+        this.majors = major;
+        this.semester = semester;
+        this.universityName = nameUniversity;
     }
-    
-    
-    
 }

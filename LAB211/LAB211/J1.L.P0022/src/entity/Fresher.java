@@ -5,6 +5,9 @@
  */
 package entity;
 
+import constant.Constant;
+import validation.Validation;
+
 /**
  *
  * @author Nhat Anh
@@ -58,14 +61,37 @@ public class Fresher extends Candidate{
 
     @Override
     public void display() {
-        // TODO Auto-generated method stub
         super.display();
+        System.out.printf("|%7s |%7s |%7s", graduated,graduationRank,education);
     }
 
     @Override
     public void input() {
-        // TODO Auto-generated method stub
         super.input();
+        String graduationDate = Validation.getString(
+                    "Enter your graduation date: ", 
+                    "Must follow fomat email", 
+                    "Invalid string", 
+                    Constant.REGEX_DATE_OF_BIRTH
+        ); 
+
+        String graduationRank = Validation.getString(
+                "Enter your graduation rank: ",
+                "Must follow: " + Constant.REGEX_GRADUATE_RANK,
+                "Invalid string",
+                Constant.REGEX_GRADUATE_RANK
+        );
+        
+        String education = Validation.getString(
+                    "Enter your education: ", 
+                    "Must follow fomat email", 
+                    "Invalid string", 
+                    Constant.REGEX_NORMAL
+        ); 
+
+        this.graduated = graduationDate;
+        this.graduationRank = graduationRank;
+        this.education = education;
     }
     
     
