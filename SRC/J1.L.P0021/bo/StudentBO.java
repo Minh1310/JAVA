@@ -84,7 +84,7 @@ public class StudentBO {
         list.sort((o1, o2) -> o1.getStudentName().compareTo(o2.getStudentName()));
         return listFind;
     }
-    
+
     /**
      * 
      * @param id
@@ -92,10 +92,10 @@ public class StudentBO {
      */
     public boolean remove(String id) {
         Integer[] index = searchIndex(id);
-        int count =0;
+        int count = 0;
         for (int i = 0; i < index.length; i++) {
-            if (list.get(index[i].intValue()-count).getId().equalsIgnoreCase(id)) {
-                list.remove(index[i].intValue()-count);
+            if (list.get(index[i] - count).getId().equalsIgnoreCase(id)) {
+                list.remove(index[i] - count);
                 count++;
             }
         }
@@ -105,9 +105,9 @@ public class StudentBO {
     /**
      * 
      * @param id
-     * @return a Integer array have value is index search 
+     * @return a Integer array have value is index search
      */
-    private Integer[] searchIndex(String id){
+    private Integer[] searchIndex(String id) {
         LinkedList<Integer> number = new LinkedList<Integer>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId().equalsIgnoreCase(id)) {
@@ -124,6 +124,9 @@ public class StudentBO {
      */
     public boolean update(String id) {
         Integer[] index = searchIndex(id);
+        if (index.length == 0) {
+            return false;
+        }
         int choice = 0;
         int count = 0;
         int indexChange = -1;
@@ -140,15 +143,15 @@ public class StudentBO {
             String newName = "";
             String semester = "";
             String courseName = "";
-            if(index.length!=1){
-                if (choice != 1 && choice != 4 && count ==0) {
+            if (index.length != 1) {
+                if (choice != 1 && choice != 4 && count == 0) {
                     String semesterUpdate = Validation.getString(
                             "Enter your semester you update: ",
                             "Your semester just have character and digit",
                             "Your ID not valid",
                             Constant.CONDITION_SEMESTER);
                     for (int i = 0; i < index.length; i++) {
-                        if (list.get(index[i].intValue()).getSemester().equalsIgnoreCase(semesterUpdate)) {
+                        if (list.get(index[i]).getSemester().equalsIgnoreCase(semesterUpdate)) {
                             indexChange = i;
                         }
                     }
@@ -163,7 +166,7 @@ public class StudentBO {
                             "Your ID not valid",
                             Constant.CONDITION_STUDENT_NAME);
                     for (int i = 0; i < index.length; i++) {
-                        list.get(index[i].intValue()).setStudentName(newName);
+                        list.get(index[i]).setStudentName(newName);
                     }
 
                     break;
@@ -178,26 +181,23 @@ public class StudentBO {
                         if (!exist(list.get(indexChange).getId(),
                                 semester, list.get(indexChange).getCourseName())) {
                             check2 = false;
-                            break;
                         }
                     } while (check2);
                     list.get(indexChange).setSemester(semester);
                     break;
                 case 3:
                     boolean check3 = true;
-                    do{
+                    do {
                         courseName = Validation.getString(
                                 "Enter new your course name: ",
                                 "Must follow fomat: JAVA, .NET, C/C++",
                                 "Your ID not valid",
                                 Constant.CONDITION_COURSE_NAME);
-                        if (!exist(list.get(indexChange).getId(), 
-                            list.get(indexChange).getSemester(), courseName)
-                        ) {
+                        if (!exist(list.get(indexChange).getId(),
+                                list.get(indexChange).getSemester(), courseName)) {
                             check3 = false;
-                            break;
                         }
-                    } while(check3);
+                    } while (check3);
                     list.get(indexChange).setCourseName(courseName);
                     break;
                 case 4:
@@ -226,7 +226,7 @@ public class StudentBO {
      * @param list
      */
     public void display() {
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             System.out.println("Empty");
         }
         list.forEach(a -> {

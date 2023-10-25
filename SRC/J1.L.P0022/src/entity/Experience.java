@@ -56,6 +56,7 @@ public class Experience extends Candidate  {
     @Override
     public void input() {
         super.input();
+        super.setCandidateType(0);
         int yearOfExp = Validation.getInt(
                     "Enter year of experience: ", 
                     "It's invalid experience", 
@@ -75,7 +76,8 @@ public class Experience extends Candidate  {
     @Override
     public void display() {
         super.display();
-        System.out.printf("|%3s |%10s",yearOfExp,proSkill);
+        System.out.printf("|%3s |%5s",yearOfExp,proSkill);
+        System.out.println();
     }
 
     

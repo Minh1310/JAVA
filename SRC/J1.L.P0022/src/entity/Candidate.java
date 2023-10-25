@@ -158,12 +158,7 @@ public class Candidate {
                     "Invalid string", 
                     Constant.REGEX_EMAIL
         ); 
-        int type = Validation.getInt(
-            "Enter type of cadidate",
-            "Out of range", 
-            "Invalid number", 
-            0, 2);
-        
+        int type = -1;
         
         this.id = id;
         this.firstName = firstName;

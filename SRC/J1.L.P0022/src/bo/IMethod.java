@@ -1,25 +1,31 @@
 
 package bo;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public interface IMethod<E>  {
+public interface IMethod<E> {
     
     /**
      *
      * Use to add information
      */
-    abstract public boolean add(ArrayList<E> list);
+    abstract public boolean add();
 
     /**
      * Use to search information you want
      */
-    abstract public ArrayList<E> search(ArrayList<E> list, String text);
+    abstract public List<E> search(String text);
 
     /**
      * Use to display information 
      * 
      * @param list is list information 
      */
-    abstract public void display(ArrayList<E> list);
+    abstract public void display();
+
+    /**
+     * 
+     * @param list is list take from input
+     */
+    abstract public void display(List<E> list);
 }

@@ -2,38 +2,44 @@
 package bo;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import entity.Fresher;
-
 public class FresherBO implements IMethod<Fresher> {
+	private List<Fresher> list;
 
-    /**
+	public FresherBO(List<Fresher> list) {
+		this.list = list;
+	}
+
+    public FresherBO() {
+		list = new ArrayList<Fresher>();
+	}
+
+    public List<Fresher> getList() {
+        return list;
+    }
+
+    public void setList(List<Fresher> list) {
+        this.list = list;
+    }
+
+	/**
      * @param list
      * @param id
      * @return
      */
-    private boolean checkExist(ArrayList<Fresher> list, String id){
-            for(Fresher ls : list){
-                if(ls.getId().equalsIgnoreCase(id)){
-                    return true;
-                }
+    private boolean checkExist(String id){
+    	for(Fresher ls : list){
+            if(ls.getId().equalsIgnoreCase(id)){
+                return true;
             }
-        return false;
-    }
-
-    @Override
-    public boolean add(ArrayList<Fresher> list) {
-        Fresher action = new Fresher();
-        action.input();
-        if(checkExist(list, action.getId())){
-            return false;
         }
-        list.add(action);
-        return true;
+    return false;
     }
 
+ 
     @Override
-    public void display(ArrayList<Fresher> list) {
+    public void display() {
         if(list.isEmpty()){
             System.out.println("List empty");
             return;
@@ -42,8 +48,8 @@ public class FresherBO implements IMethod<Fresher> {
     }
 
     @Override
-    public ArrayList<Fresher> search(ArrayList<Fresher> list,String name) {
-        ArrayList<Fresher> listFind = new ArrayList<>();
+    public List<Fresher> search(String name) {
+        List<Fresher> listFind = new ArrayList<>();
         list.forEach(ls -> {
             if(
                 ls.getFirstName().toLowerCase().contains(name)|| 
@@ -54,5 +60,25 @@ public class FresherBO implements IMethod<Fresher> {
         });
         return listFind; 
     }
-    
+
+	@Override
+	public boolean add() {
+		  Fresher action = new Fresher();
+		  action.input();
+		  if(checkExist(action.getId())){
+		     return false;
+		  }
+		  list.add(action);
+		  return true;
+	}
+
+    @Override
+    public void display(List<Fresher> list) {
+        if(list.isEmpty()){
+            System.out.println("List empty");
+            return;
+        }
+        list.forEach(ls-> ls.display());   
+    }
 }
+    

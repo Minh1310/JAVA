@@ -64,11 +64,13 @@ public class Fresher extends Candidate{
     public void display() {
         super.display();
         System.out.printf("|%7s |%7s |%7s", graduated,graduationRank,education);
+        System.out.println();
     }
 
     @Override
     public void input() {
         super.input();
+        super.setCandidateType(1);
         String graduationDate = Validation.getString(
                     "Enter your graduation date: ", 
                     "Must follow fomat email", 

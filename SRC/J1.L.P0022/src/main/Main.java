@@ -6,16 +6,11 @@
  */
 package main;
 
-import java.util.ArrayList;
 import bo.ExperienceBO;
 import bo.FresherBO;
 import bo.InternBO;
 import constant.Constant;
-import entity.Experience;
-import entity.Fresher;
-import entity.Intern;
 import utils.Validation;
-
 /**
  *
  * @author Nhat Anh
@@ -23,13 +18,9 @@ import utils.Validation;
 public class Main {
     
     public static void main(String[] args){
-        ArrayList<Experience> expList = new ArrayList<>();
-        ArrayList<Fresher> freList = new ArrayList<>();
-        ArrayList<Intern> intList = new ArrayList<>();
-        ExperienceBO exp = new ExperienceBO();
-        InternBO inte = new InternBO();
-        FresherBO fre = new FresherBO();
-        
+        ExperienceBO experBO = new ExperienceBO();
+        InternBO intBO = new InternBO();
+        FresherBO freBO = new FresherBO(); 
         System.out.println("minh");
         int choice;
         do{
@@ -45,27 +36,27 @@ public class Main {
                 1,5);
             switch(choice){
                 case 1:
-                    exp.display(expList);
-                    exp.add(expList);
-                    exp.display(expList);
+                    experBO.display();
+                    experBO.add();
+                    experBO.display();
                     break;
                 case 2:
-                    fre.display(freList);
-                    fre.add(freList);
-                    fre.display(freList);
+                    freBO.display();
+                    freBO.add();
+                    freBO.display();
                     break;
                 case 3:
-                    inte.display(intList);
-                    inte.add(intList);
-                    inte.display(intList);
+                    intBO.display();
+                    intBO.add();
+                    intBO.display();
                     break;
                 case 4:
                     System.out.println("------Experience------");
-                    exp.display(expList);
+                    experBO.display();
                     System.out.println("------Fresher------");
-                    fre.display(freList);
+                    freBO.display();
                     System.out.println("------Intern------");
-                    inte.display(intList);
+                    intBO.display();
                     System.out.println("-------------------");
                     String name = Validation.getString(
                         "Enter your first name or last name : ", 
@@ -73,9 +64,23 @@ public class Main {
                         "Invalid string", 
                         Constant.REGEX_NAME
                     ).toLowerCase();
-                    exp.display(exp.search(expList,name));
-                    fre.display(fre.search(freList, name));
-                    inte.display(inte.search(intList, name));
+                    int type = Validation.getInt(
+                            "Enter type of cadidate",
+                            "Out of range", 
+                            "Invalid number", 
+                            0, 2);
+                    switch(type){
+                        case 0:
+                            experBO.display(experBO.search(name));
+                            break;
+                        case 1:
+                            freBO.display(freBO.search( name));
+                            break;
+                        case 2:
+                            intBO.display(intBO.search( name));
+                            break;
+
+                    }
                     break;
                 case 5:
                     break;

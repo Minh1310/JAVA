@@ -5,10 +5,8 @@
  */
 package main;
 
-import entity.Task;
-import java.util.ArrayList;
-import logic.Management;
-import validation.Validation;
+import utils.Validation;
+import bo.TaskBO;
 
 /**
  *
@@ -17,13 +15,8 @@ import validation.Validation;
 public class Main {
     
     public static void main(String[] args){
-    ArrayList<Task> list = new ArrayList<>();
-    Management manage = new Management();
-    list.add(new Task(105, "Dev Program", "Code", "28/08/2015", 9.5, "Dev", "Lead"));
-    list.add(new Task(106, "Dev Program", "Code", "29/08/2015", 10, "Dev", "Lead"));
-    list.add(new Task(107, "Dev Program", "Code", "30/08/2015", 10.5, "Dev", "Lead"));
-    list.add(new Task(108, "Dev Program", "Code", "31/08/2015", 11, "Dev", "Lead"));
-    
+
+    TaskBO taskBO = new TaskBO();
     int choice;
     do{
         System.out.println("1. Add task");
@@ -37,13 +30,20 @@ public class Main {
                 1, 4);
         switch(choice){
             case 1:
-                manage.addTask(list);
+                System.out.println(taskBO.add()? "Success" : "fail");    
                 break;
             case 2:
-                manage.deleteTask(list);
+                int min = taskBO.getList().get(0).getId();
+                int max = taskBO.getList().get(taskBO.getList().size()-1).getId();
+                int id = Validation.getInt(
+                    "Enter your id: ",
+                    "Out of range", 
+                    "Invalid number", 
+                    min,max);
+                System.out.println(taskBO.delete(id)? "Success" : "fail");  
                 break;
             case 3: 
-                manage.showTask(list);
+                taskBO.display();;
                 break;
             case 4:
                 break;

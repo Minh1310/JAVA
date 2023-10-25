@@ -65,11 +65,13 @@ public class Intern extends Candidate {
     public void display() {
         super.display();
         System.out.printf("|%10s |%10s |%10s",majors,semester,universityName);
+        System.out.println();
     }
 
     @Override
     public void input() {
         super.input();
+        super.setCandidateType(2);
         String major = Validation.getString(
                     "Enter your majoy: ", 
                     "Must follow fomat", 

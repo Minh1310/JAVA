@@ -2,17 +2,31 @@
 package bo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import entity.Intern;
 
 public class InternBO implements IMethod<Intern> {
+	
+	private List<Intern> list;
+    public InternBO(List<Intern> list) {
+		super();
+		this.list = list;
+	}
+    
 
-    /**
+	public InternBO() {
+		super();
+		list = new ArrayList<Intern>();
+	}
+
+
+	/**
      * @param list
      * @param id
      * @return
      */
-    private boolean checkExist(ArrayList<Intern> list, String id){
+    private boolean checkExist( String id){
             for(Intern ls : list){
                 if(ls.getId().equalsIgnoreCase(id)){
                     return true;
@@ -22,10 +36,10 @@ public class InternBO implements IMethod<Intern> {
     }
 
     @Override
-    public boolean add(ArrayList<Intern> list) {
+    public boolean add() {
         Intern action = new Intern();
         action.input();
-        if(checkExist(list, action.getId())){
+        if(checkExist(action.getId())){
             return false;
         }
         list.add(action);
@@ -33,7 +47,7 @@ public class InternBO implements IMethod<Intern> {
     }
 
     @Override
-    public void display(ArrayList<Intern> list) {
+    public void display() {
         if(list.isEmpty()){
             System.out.println("List empty");
             return;
@@ -42,7 +56,7 @@ public class InternBO implements IMethod<Intern> {
     }
 
     @Override
-    public ArrayList<Intern> search(ArrayList<Intern> list,String name) {
+    public List<Intern> search(String name) {
         ArrayList<Intern> listFind = new ArrayList<>();
         list.forEach(ls -> {
             if(
@@ -53,5 +67,15 @@ public class InternBO implements IMethod<Intern> {
             }
         });
         return listFind; 
+    }
+
+
+    @Override
+    public void display(List<Intern> list) {
+        if(list.isEmpty()){
+            System.out.println("List empty");
+            return;
+        }
+        list.forEach(ls-> ls.display()); 
     }
 }
