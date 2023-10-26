@@ -9,7 +9,7 @@ package bo;
 import entity.Report;
 import entity.Student;
 import java.util.List;
-
+import java.util.ArrayList;
 /**
  *
  * @author Nhat Anh
@@ -23,6 +23,7 @@ public class ReportBO {
     }
 
     public ReportBO() {
+        this.listReports = new ArrayList<>();
     }
 
     public List<Report> getListReports() {
@@ -59,21 +60,24 @@ public class ReportBO {
      * Use to check repeat
      */
     public void checkRepeat() {
-        int count;
-        for (int i = 0; i < listReports.size() - 1; i++) {
-            for (int j = i + 1; j < listReports.size(); j++) {
-                String name = listReports.get(j).getName();
-                String course = listReports.get(j).getCourseName();
-                String semester = listReports.get(j).getSemester();
-                if (
-                    listReports.get(i).getName().equalsIgnoreCase(name) &&
-                    listReports.get(i).getCourseName().equalsIgnoreCase(course) &&
-                    !listReports.get(i).getSemester().equalsIgnoreCase(semester)
-                ) {
-                    count = listReports.get(i).getTotalOfCourse();
-                    count++;
-                    listReports.get(i).setTotalOfCourse(count);
-                    listReports.remove(listReports.get(j));
+        int count; 
+        for(int k =0; k< listReports.size() ; k++){     
+            for (int i = 0; i < listReports.size() ; i++) {
+                for (int j = i+1; j < listReports.size(); j++) {
+                    String name = listReports.get(j).getName();
+                    String course = listReports.get(j).getCourseName();
+                    String semester = listReports.get(j).getSemester();
+                    if (
+                        listReports.get(i).getName().equalsIgnoreCase(name) &&
+                        listReports.get(i).getCourseName().equalsIgnoreCase(course) &&
+                        !listReports.get(i).getSemester().equalsIgnoreCase(semester)
+                    ) {
+                        count = listReports.get(i).getTotalOfCourse();
+                        count++;
+                        listReports.get(i).setTotalOfCourse(count);
+                        listReports.remove(listReports.get(j));
+                    
+                    }
                 }
             }
         }

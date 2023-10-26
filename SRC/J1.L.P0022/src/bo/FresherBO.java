@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import entity.Fresher;
 public class FresherBO implements IMethod<Fresher> {
-	private List<Fresher> list;
+    private List<Fresher> list;
 
-	public FresherBO(List<Fresher> list) {
-		this.list = list;
-	}
+    public FresherBO(List<Fresher> list) {
+        this.list = list;
+    }
 
     public FresherBO() {
-		list = new ArrayList<Fresher>();
-	}
+        list = new ArrayList<>();
+        list.add(new Fresher("HE161654", "F", "A", "10/10/2003", "FPT",
+                            "1234567890", "minh@gmail.com", 1,
+                            "12/12/2022", "A", "FPT"));
+    }
 
     public List<Fresher> getList() {
         return list;
@@ -23,21 +26,17 @@ public class FresherBO implements IMethod<Fresher> {
         this.list = list;
     }
 
-	/**
-     * @param list
+    /**
      * @param id
      * @return
      */
     private boolean checkExist(String id){
-    	for(Fresher ls : list){
-            if(ls.getId().equalsIgnoreCase(id)){
-                return true;
-            }
-        }
-    return false;
+        return list.stream().anyMatch((ls) -> (ls.getId().equalsIgnoreCase(id)));
     }
 
- 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void display() {
         if(list.isEmpty()){
@@ -46,7 +45,10 @@ public class FresherBO implements IMethod<Fresher> {
         }
         list.forEach(ls-> ls.display());
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Fresher> search(String name) {
         List<Fresher> listFind = new ArrayList<>();
@@ -58,20 +60,26 @@ public class FresherBO implements IMethod<Fresher> {
                 listFind.add(ls);
             }
         });
-        return listFind; 
+        return listFind;
     }
-
-	@Override
-	public boolean add() {
-		  Fresher action = new Fresher();
-		  action.input();
-		  if(checkExist(action.getId())){
-		     return false;
-		  }
-		  list.add(action);
-		  return true;
-	}
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean add() {
+        Fresher action = new Fresher();
+        action.input();
+        if (checkExist(action.getId())) {
+            return false;
+        }
+        list.add(action);
+        return true;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void display(List<Fresher> list) {
         if(list.isEmpty()){

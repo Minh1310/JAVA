@@ -57,20 +57,18 @@ public class Experience extends Candidate  {
     public void input() {
         super.input();
         super.setCandidateType(0);
-        int yearOfExp = Validation.getInt(
+        this.yearOfExp = Validation.getInt(
                     "Enter year of experience: ", 
                     "It's invalid experience", 
                     "Invalid number", 
                     0,100
         );
-        String proSkill = Validation.getString(
+        this.proSkill = Validation.getString(
                     "Enter professional skill: ", 
                     "Must follow format", 
                     "Invalid string", 
                     Constant.REGEX_NORMAL
         );
-        this.yearOfExp = yearOfExp;
-        this.proSkill = proSkill;
     }
 
     @Override

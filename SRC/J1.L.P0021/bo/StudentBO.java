@@ -22,6 +22,12 @@ public class StudentBO {
     private List<Student> list;
 
     public StudentBO() {
+        this.list = new ArrayList<>();
+        list.add(new Student("HE171754", "A", "Summer", "java"));
+        list.add(new Student("HE171754", "A", "Fall", "java"));
+        list.add(new Student("HE171755", "B", "Summer", "java"));
+        list.add(new Student("HE171755", "B", "Fall", "java"));
+        list.add(new Student("HE171754", "A", "Spring", "java"));
     }
 
     public List<Student> getList() {
@@ -41,23 +47,18 @@ public class StudentBO {
      * 
      * @param list list about information of student take from input
      * @param id   is ID of student take from input
-     * @return true if ID existed and same sesmester or false if ID not exist
+     * @return true if ID existed and same semester or false if ID not exist
      */
     private boolean exist(String id, String semester, String course) {
-        for (Student ls : list) {
-            if (ls.getId().equalsIgnoreCase(id) &&
-                    ls.getSemester().equalsIgnoreCase(semester) &&
-                    ls.getCourseName().equalsIgnoreCase(course)) {
-                return true;
-            }
-        }
-        return false;
+        return list.stream().anyMatch((ls) -> (ls.getId().equalsIgnoreCase(id) &&
+                ls.getSemester().equalsIgnoreCase(semester) &&
+                ls.getCourseName().equalsIgnoreCase(course)));
     }
 
     /**
      * Use to get new student from input
      * 
-     * @param list list about information of student take from input
+     * @return 
      */
     public boolean add() {
         Student student = new Student();
@@ -72,7 +73,8 @@ public class StudentBO {
     /**
      * Use to find student list find by name
      * 
-     * @param list list about information of student take from input
+     * @param text
+     * @return 
      */
     public List<Student> search(String text) {
         List<Student> listFind = new ArrayList<>();
@@ -93,11 +95,9 @@ public class StudentBO {
     public boolean remove(String id) {
         Integer[] index = searchIndex(id);
         int count = 0;
-        for (int i = 0; i < index.length; i++) {
-            if (list.get(index[i] - count).getId().equalsIgnoreCase(id)) {
-                list.remove(index[i] - count);
-                count++;
-            }
+        for (Integer index1 : index) {
+            list.remove(index1 - count);
+            count++;
         }
         return true;
     }
@@ -108,7 +108,7 @@ public class StudentBO {
      * @return a Integer array have value is index search
      */
     private Integer[] searchIndex(String id) {
-        LinkedList<Integer> number = new LinkedList<Integer>();
+        LinkedList<Integer> number = new LinkedList<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId().equalsIgnoreCase(id)) {
                 number.add(i);
@@ -140,7 +140,7 @@ public class StudentBO {
                     "Your choice must be 1 to 4!",
                     "Number is not valid!",
                     1, 4);
-            String newName = "";
+            String newName;
             String semester = "";
             String courseName = "";
             if (index.length != 1) {
@@ -165,8 +165,8 @@ public class StudentBO {
                             "Your name just have character and digit",
                             "Your ID not valid",
                             Constant.CONDITION_STUDENT_NAME);
-                    for (int i = 0; i < index.length; i++) {
-                        list.get(index[i]).setStudentName(newName);
+                    for (Integer index1 : index) {
+                        list.get(index1).setStudentName(newName);
                     }
 
                     break;
@@ -223,7 +223,6 @@ public class StudentBO {
     /**
      * Use to display information of student
      * 
-     * @param list
      */
     public void display() {
         if (list.isEmpty()) {

@@ -58,7 +58,9 @@ public class Intern extends Candidate {
 
     @Override
     public String toString() {
-        return super.toString() +" Intern{" + "majors=" + majors + ", semester=" + semester + ", universityName=" + universityName + '}';
+        return super.toString() +" Intern{" + "majors=" + majors 
+                + ", semester=" + semester + ", universityName=" 
+                + universityName + '}';
     }
 
     @Override
@@ -72,26 +74,23 @@ public class Intern extends Candidate {
     public void input() {
         super.input();
         super.setCandidateType(2);
-        String major = Validation.getString(
+        this.majors = Validation.getString(
                     "Enter your majoy: ", 
                     "Must follow fomat", 
                     "Invalid string", 
                     Constant.REGEX_NAME
         ); 
-        String semester = Validation.getString(
+        this.semester = Validation.getString(
                     "Enter your semester: ", 
                     "Must follow fomat", 
                     "Invalid string", 
                     Constant.REGEX_NORMAL
         ); 
-        String nameUniversity = Validation.getString(
+        this.universityName = Validation.getString(
                     "Enter your university name: ", 
                     "Must follow fomat", 
                     "Invalid string", 
                     Constant.REGEX_NAME
         );
-        this.majors = major;
-        this.semester = semester;
-        this.universityName = nameUniversity;
     }
 }

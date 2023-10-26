@@ -12,6 +12,8 @@ public class ExperienceBO implements IMethod<Experience>{
     
     public ExperienceBO() {
         this.list = new ArrayList<>();
+        list.add(new Experience("HE171754", "E", "A", "10/10/2003", "FPT",
+                                "1234567890", "minh@gmail.com", 0, 3, "Speaking"));
     }
 
     public ExperienceBO(List<Experience> list) {
@@ -32,14 +34,12 @@ public class ExperienceBO implements IMethod<Experience>{
      * @return
      */
     private boolean checkExist( String id){
-            for(Experience ls : list){
-                if(ls.getId().equalsIgnoreCase(id)){
-                    return true;
-                }
-            }
-        return false;
+        return list.stream().anyMatch((ls) -> (ls.getId().equalsIgnoreCase(id)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean add() {
         Experience experience = new Experience();
@@ -50,10 +50,13 @@ public class ExperienceBO implements IMethod<Experience>{
         list.add(experience);
         return true;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Experience> search(String text) {
-        ArrayList<Experience> listFind = new ArrayList<>();
+        List<Experience> listFind = new ArrayList<>();
         list.forEach(ls -> {
             if(
                 ls.getFirstName().toLowerCase().contains(text)|| 
@@ -64,7 +67,10 @@ public class ExperienceBO implements IMethod<Experience>{
         });
         return listFind; 
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void display() {
         if(list.isEmpty()){
@@ -73,7 +79,10 @@ public class ExperienceBO implements IMethod<Experience>{
         }
         list.forEach(ls-> ls.display());
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void display(List<Experience> list) {
         if(list.isEmpty()){

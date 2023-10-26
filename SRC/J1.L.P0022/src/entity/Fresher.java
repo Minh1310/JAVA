@@ -15,7 +15,7 @@ import utils.Validation;
  */
 public class Fresher extends Candidate{
     
-    private String graduated;
+    private String graduateDate;
     private String graduationRank;
     private String education;
 
@@ -26,17 +26,17 @@ public class Fresher extends Candidate{
                     String address, String phone, String email, int candidateType, 
                     String graduated, String graduationRank, String education) {
         super(id, firstName, lastName, birthDate, address, phone, email, candidateType);
-        this.graduated = graduated;
+        this.graduateDate = graduated;
         this.graduationRank = graduationRank;
         this.education = education;
     }
 
-    public String getGraduated() {
-        return graduated;
+    public String getGraduateDate() {
+        return graduateDate;
     }
 
-    public void setGraduated(String graduated) {
-        this.graduated = graduated;
+    public void setGraduateDate(String graduateDate) {
+        this.graduateDate = graduateDate;
     }
 
     public String getGraduationRank() {
@@ -57,13 +57,13 @@ public class Fresher extends Candidate{
 
     @Override
     public String toString() {
-        return super .toString() + " Fresher{" + "graduated=" + graduated + ", graduationRank=" + graduationRank + ", education=" + education + '}';
+        return super .toString() + " Fresher{" + "graduated=" + graduateDate + ", graduationRank=" + graduationRank + ", education=" + education + '}';
     }
 
     @Override
     public void display() {
         super.display();
-        System.out.printf("|%7s |%7s |%7s", graduated,graduationRank,education);
+        System.out.printf("|%7s |%7s |%7s", graduateDate,graduationRank,education);
         System.out.println();
     }
 
@@ -71,30 +71,26 @@ public class Fresher extends Candidate{
     public void input() {
         super.input();
         super.setCandidateType(1);
-        String graduationDate = Validation.getString(
+        this.graduateDate = Validation.getString(
                     "Enter your graduation date: ", 
                     "Must follow fomat email", 
                     "Invalid string", 
                     Constant.REGEX_DATE_OF_BIRTH
         ); 
 
-        String graduationRank = Validation.getString(
+        this.graduationRank = Validation.getString(
                 "Enter your graduation rank: ",
                 "Must follow: " + Constant.REGEX_GRADUATE_RANK,
                 "Invalid string",
                 Constant.REGEX_GRADUATE_RANK
         );
         
-        String education = Validation.getString(
+        this.education = Validation.getString(
                     "Enter your education: ", 
                     "Must follow fomat email", 
                     "Invalid string", 
                     Constant.REGEX_NORMAL
         ); 
-
-        this.graduated = graduationDate;
-        this.graduationRank = graduationRank;
-        this.education = education;
     }
     
     

@@ -1,25 +1,14 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
 import bo.ReportBO;
 import bo.StudentBO;
 import constant.Constant;
-import entity.Report;
-import entity.Student;
 import utils.Validation;
 
 public class Main {
     public static void main(String[] args) {
-        List<Student> list = new ArrayList<>();
-        List<Report> listReports = new ArrayList<>();
-        StudentBO studentBO = new StudentBO(list);
-        ReportBO reportBO = new ReportBO(listReports);
-        list.add(new Student("HE171754", "A", "Summer", "java"));
-        list.add(new Student("HE171754", "A", "Fall", "java"));
-        list.add(new Student("HE171755", "B", "Summer", "c/c++"));
-        list.add(new Student("HE171755", "B", "Fall", "c/c++"));
-        list.add(new Student("HE171754", "A", "Spring", "java"));
+        StudentBO studentBO = new StudentBO();
+        ReportBO reportBO = new ReportBO();
         System.out.println("----------------");
     
         int choice;
@@ -103,6 +92,7 @@ public class Main {
                             Constant.CONDITION_COURSE_NAME);
                     reportBO.add(studentBO.getList(), courseName);
                     reportBO.checkRepeat();
+                    System.out.println("-----------");
                     reportBO.display();
                     reportBO.clear();
                     break;

@@ -113,61 +113,52 @@ public class Candidate {
     }
 
     /**
-     * Use to get infomation
+     * Use to get information
      */
     public void input() {
-        String id = Validation.getString(
+        this.id = Validation.getString(
                     "Enter your ID: ", 
                     "Must follow fomat " + Constant.REGEX_ID, 
                     "Your ID not valid", 
                     Constant.REGEX_ID
         );
-        String firstName = Validation.getString(
+       this.firstName = Validation.getString(
                     "Enter your first name: ", 
                     "Must have(a-zA-Z)", 
                     "Invalid string", 
                     Constant.REGEX_NAME
         );
-        String lastName = Validation.getString(
+        this.lastName = Validation.getString(
                     "Enter your last name: ", 
                     "Must have(a-zA-Z)", 
                     "Invalid string", 
                     Constant.REGEX_NAME
         );
-        String birthDate = Validation.getString(
+        this.birthDate = Validation.getString(
                     "Enter your birth date: ", 
                     "Must follow dd/mm/yy", 
                     "Invalid string", 
                     Constant.REGEX_DATE_OF_BIRTH
         ); 
-        String address = Validation.getString(
+        this.address = Validation.getString(
                     "Enter your address: ", 
                     "Must follow (a-zA-Z0-9)", 
                     "Invalid string", 
                     Constant.REGEX_NORMAL
         );
-        String phone = Validation.getString(
+        this.phone = Validation.getString(
                     "Enter your phone: ", 
                     "Must have 10 or 11 number", 
                     "Invalid string", 
                     Constant.REGEX_PHONE
         );
-        String email = Validation.getString(
+        this.email = Validation.getString(
                     "Enter your email: ", 
                     "Must follow fomat email", 
                     "Invalid string", 
                     Constant.REGEX_EMAIL
         ); 
         int type = -1;
-        
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.candidateType = type;
     }
 
     /**
