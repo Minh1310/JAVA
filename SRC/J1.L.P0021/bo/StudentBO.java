@@ -93,7 +93,7 @@ public class StudentBO {
      * @return
      */
     public boolean remove(String id) {
-        Integer[] index = searchIndex(id);
+        List<Integer> index = searchId(id);
         int count = 0;
         for (Integer index1 : index) {
             list.remove(index1 - count);
@@ -107,14 +107,15 @@ public class StudentBO {
      * @param id
      * @return a Integer array have value is index search
      */
-    private Integer[] searchIndex(String id) {
-        LinkedList<Integer> number = new LinkedList<>();
+    private List<Integer> searchId(String id) {
+        List<Integer> number = new LinkedList<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId().equalsIgnoreCase(id)) {
                 number.add(i);
             }
         }
-        return number.toArray(new Integer[number.size()]);
+        return number;
+        //.toArray(new Integer[number.size()]);
     }
 
     /**
@@ -123,8 +124,8 @@ public class StudentBO {
      * @return
      */
     public boolean update(String id) {
-        Integer[] index = searchIndex(id);
-        if (index.length == 0) {
+        List<Integer> index = searchId(id);
+        if (index.isEmpty()) {
             return false;
         }
         int choice = 0;
@@ -143,21 +144,21 @@ public class StudentBO {
             String newName;
             String semester = "";
             String courseName = "";
-            if (index.length != 1) {
+            if (index.size() > 1) {
                 if (choice != 1 && choice != 4 && count == 0) {
                     String semesterUpdate = Validation.getString(
                             "Enter your semester you update: ",
                             "Your semester just have character and digit",
                             "Your ID not valid",
                             Constant.CONDITION_SEMESTER);
-                    for (int i = 0; i < index.length; i++) {
-                        if (list.get(index[i]).getSemester().equalsIgnoreCase(semesterUpdate)) {
+                    for (int i = 0; i < index.size(); i++) {
+                        if (list.get(index.get(i)).getSemester().equalsIgnoreCase(semesterUpdate)) {
                             indexChange = i;
                         }
                     }
                     count++;
                 }
-            }
+            } 
             switch (choice) {
                 case 1:
                     newName = Validation.getString(
@@ -165,9 +166,9 @@ public class StudentBO {
                             "Your name just have character and digit",
                             "Your ID not valid",
                             Constant.CONDITION_STUDENT_NAME);
-                    for (Integer index1 : index) {
+                    index.forEach((index1) -> {
                         list.get(index1).setStudentName(newName);
-                    }
+                    });
 
                     break;
                 case 2:
