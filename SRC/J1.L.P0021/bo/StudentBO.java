@@ -10,8 +10,13 @@ import entity.Student;
 import utils.Validation;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -50,7 +55,8 @@ public class StudentBO {
      * @return true if ID existed and same semester or false if ID not exist
      */
     private boolean exist(String id, String semester, String course) {
-        return list.stream().anyMatch((ls) -> (ls.getId().equalsIgnoreCase(id) &&
+        return list.stream().anyMatch((ls) -> (
+        		ls.getId().equalsIgnoreCase(id) &&
                 ls.getSemester().equalsIgnoreCase(semester) &&
                 ls.getCourseName().equalsIgnoreCase(course)));
     }
@@ -63,12 +69,75 @@ public class StudentBO {
     public boolean add() {
         Student student = new Student();
         student.input();
-        if (exist(student.getId(), student.getSemester(), student.getCourseName())) {
-            return false;
+        while (exist(student.getId(), student.getSemester(), student.getCourseName())) {
+        	student.display();
+        	System.out.println(Constant.messageStudentExist);
+        	int choice = Validation.getInt(
+        			"Enter 1 to set again, 2 to continue", 
+        			"Out of range", 
+        			"Invalid number", 
+        			1, 2);
+        	boolean m = true;
+        	if(choice ==1) { 
+        		setStudent(student);
+        	}else { 
+        		return false;
+        	}
         }
-        list.add(student);
-        return true;
+        return list.add(student);
     }
+    
+	/**
+	 * 
+	 * @param student
+	 */
+	private void setStudent(Student student) {
+		int choice = 0;
+		while(choice!=5) {
+			System.out.println("1. Set id");
+			System.out.println("2. Set name");
+			System.out.println("3. Set semester");
+			System.out.println("4. Set course name");
+			System.out.println("5. exit");
+			choice = Validation.getInt(
+				"Enter your choice", 
+				"Out of range", 
+				"Invalid", 1, 5);
+			switch (choice) {
+			case 1:
+				String id = Validation.getString(
+						"Enter your ID: ", 
+						"Must follow fomat: HE171754", 
+						Constant.CONDITION_ID);
+				student.setCourseName(id);
+				break;
+			case 2:
+				String studentName = Validation.getString(
+						"Enter student name: ", 
+						"Must follow fomat: Minh",
+						Constant.CONDITION_STUDENT_NAME);
+				student.setStudentName(studentName);
+				break;
+			case 3:
+				String semester = Validation.getString(
+						"Enter your semester: ",
+						"Must follow fomat just have character and digit", 
+						Constant.CONDITION_SEMESTER);
+				student.setSemester(semester);
+				break;
+			case 4:
+				String courseName = Validation.getString(
+						"Enter your course name: ", 
+						"Must follow fomat: JAVA, .NET, C/C++",
+						Constant.CONDITION_COURSE_NAME);
+				student.setCourseName(courseName.toUpperCase());
+				break;
+			case 5:
+				break;
+			}
+		}
+
+	}
 
     /**
      * Use to find student list find by name
@@ -76,13 +145,13 @@ public class StudentBO {
      * @param text
      * @return 
      */
-    public List<Student> search(String text) {
+    public List<Student> searchName(String text) {
         List<Student> listFind = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getStudentName().contains(text)) {
-                listFind.add(list.get(i));
+        list.forEach( a ->{
+        	if (a.getStudentName().toLowerCase().contains(text.toLowerCase())) {
+                listFind.add(a);
             }
-        }
+        });
         list.sort((o1, o2) -> o1.getStudentName().compareTo(o2.getStudentName()));
         return listFind;
     }
@@ -93,29 +162,32 @@ public class StudentBO {
      * @return
      */
     public boolean remove(String id) {
-        List<Integer> index = searchId(id);
+        ListIterator<Student> iterator = list.listIterator();
         int count = 0;
-        for (Integer index1 : index) {
-            list.remove(index1 - count);
-            count++;
+        while (iterator.hasNext()) {
+            if (iterator.next().getId().equalsIgnoreCase(id)) {
+                iterator.remove();
+                count++;
+            }
         }
-        return true;
+        return count > 0;
     }
 
     /**
      * 
      * @param id
-     * @return a Integer array have value is index search
+     * @return a Integer array have value is index searchName
      */
     private List<Integer> searchId(String id) {
-        List<Integer> number = new LinkedList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId().equalsIgnoreCase(id)) {
-                number.add(i);
-            }
+    List<Integer> number = new ArrayList<>();
+    int index = 0;
+    for (Student obj : list) {
+        if (obj.getId().equalsIgnoreCase(id)) {
+            number.add(index);
         }
-        return number;
-        //.toArray(new Integer[number.size()]);
+        index++;
+    }
+    return number;
     }
 
     /**
@@ -124,13 +196,14 @@ public class StudentBO {
      * @return
      */
     public boolean update(String id) {
-        List<Integer> index = searchId(id);
-        if (index.isEmpty()) {
+        List<Integer> listIndex = searchId(id);
+        if (listIndex.isEmpty()) {
             return false;
         }
+        listIndex.forEach( a -> {list.get(a).display();});
         int choice = 0;
         int count = 0;
-        int indexChange = -1;
+        Student student = null;
         while (choice != 4) {
             System.out.println("1. update name");
             System.out.println("2. update semester");
@@ -141,71 +214,104 @@ public class StudentBO {
                     "Your choice must be 1 to 4!",
                     "Number is not valid!",
                     1, 4);
-            String newName;
-            String semester = "";
-            String courseName = "";
-            if (index.size() > 1) {
-                if (choice != 1 && choice != 4 && count == 0) {
-                    String semesterUpdate = Validation.getString(
-                            "Enter your semester you update: ",
-                            "Your semester just have character and digit",
-                            "Your ID not valid",
-                            Constant.CONDITION_SEMESTER);
-                    for (int i = 0; i < index.size(); i++) {
-                        if (list.get(index.get(i)).getSemester().equalsIgnoreCase(semesterUpdate)) {
-                            indexChange = i;
-                        }
-                    }
-                    count++;
-                }
-            } 
+			if (choice != 1 && choice != 4 && count == 0) {
+				String semesterUpdate = Validation.getString(
+						"Enter your semester you want update: ",
+						"Your semester just have character and digit", 
+						Constant.CONDITION_SEMESTER);
+				for (Integer in : listIndex) {
+					if (list.get(in).getSemester().equalsIgnoreCase(semesterUpdate)) {
+						student = list.get(in);
+						break;
+					}
+				}
+				count++;
+			}
+			if (student == null) {
+				return false;
+			}     
             switch (choice) {
                 case 1:
-                    newName = Validation.getString(
+                    String newName = Validation.getString(
                             "Enter new student name: ",
                             "Your name just have character and digit",
-                            "Your ID not valid",
                             Constant.CONDITION_STUDENT_NAME);
-                    index.forEach((index1) -> {
+                    listIndex.forEach((index1) -> {
                         list.get(index1).setStudentName(newName);
                     });
-
                     break;
                 case 2:
-                    boolean check2 = true;
+                    String semester;
                     do {
                         semester = Validation.getString(
                                 "Enter new your semester: ",
                                 "Your semester just have character and digit",
-                                "Your ID not valid",
                                 Constant.CONDITION_SEMESTER);
-                        if (!exist(list.get(indexChange).getId(),
-                                semester, list.get(indexChange).getCourseName())) {
-                            check2 = false;
+                        if (!exist(student.getId(),semester, student.getCourseName())) {                    	
+                            break;
                         }
-                    } while (check2);
-                    list.get(indexChange).setSemester(semester);
+                        System.out.println(Constant.messageStudentExist);
+                    } while (true);
+                    student.setSemester(semester);
                     break;
                 case 3:
-                    boolean check3 = true;
+                    String courseName;
                     do {
                         courseName = Validation.getString(
                                 "Enter new your course name: ",
                                 "Must follow fomat: JAVA, .NET, C/C++",
-                                "Your ID not valid",
                                 Constant.CONDITION_COURSE_NAME);
-                        if (!exist(list.get(indexChange).getId(),
-                                list.get(indexChange).getSemester(), courseName)) {
-                            check3 = false;
+                        if(!exist(student.getId(),student.getSemester(), courseName)) {
+                        	break;
                         }
-                    } while (check3);
-                    list.get(indexChange).setCourseName(courseName);
+                        System.out.println(Constant.messageStudentExist);
+                    } while (true);
+                    student.setCourseName(courseName);
                     break;
                 case 4:
                     break;
             }
         }
         return true;
+    }
+    
+    /**
+     * 
+     * @param list
+     */
+    public void report(String course) {
+    	List<Student> listCourse = new ArrayList<>();
+    	Set<String> set = new HashSet<>();
+    	list.forEach(a -> {
+    		if(a.getCourseName().equalsIgnoreCase(course)) {
+    			listCourse.add(a);
+    			set.add(a.getId());
+    		}
+    	});	
+    	if(listCourse.isEmpty()) {
+    		System.out.println("Don have information");
+    	}
+    	// Map to store the counts
+        Map<String, Integer> countMap = new HashMap<>();
+        
+        // Process the data
+		for (Student student : listCourse) {
+			String id = student.getId();
+			countMap.put(id, countMap.getOrDefault(id, 0) + 1);
+		} 
+        set.forEach( a -> {
+        	for (Student student : listCourse) {
+        		if(a.equalsIgnoreCase(student.getId())) {
+        			System.out.printf("%10s|%10s|%10s",
+        					student.getStudentName(),
+        					student.getCourseName(),
+        					countMap.get(student.getId())
+        					);
+        			System.out.println();
+        			break;
+        		}      
+        	}   
+        });
     }
 
     /**

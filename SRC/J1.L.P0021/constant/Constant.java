@@ -10,6 +10,8 @@ package constant;
  * @author Nhat Anh
  */
 public class Constant {
+	
+	public static final String messageStudentExist ="Student exist";
 
     public static final String CONDITION_ID = "^(HE|HS)\\d{6}$";
     

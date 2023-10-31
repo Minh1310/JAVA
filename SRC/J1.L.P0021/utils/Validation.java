@@ -87,20 +87,14 @@ public class Validation {
     public static String getString(
             String messageInfo,
             String messageErrorFormat,
-            String messageErrorInvalidString,
-            String conditionString) {
+            final String conditionString) {
         do {
-            try {
                 System.out.println(messageInfo);
-                String texts = SCANNER.nextLine().toUpperCase();
+                String texts = SCANNER.nextLine();
                 if (texts.matches(conditionString)) {
                     return texts;
                 }
                 System.out.println(messageErrorFormat);
-
-            } catch (NumberFormatException e) {
-                System.out.println(messageErrorInvalidString);
-            }
         } while (true);
     }
 }

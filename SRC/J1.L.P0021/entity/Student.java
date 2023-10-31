@@ -78,27 +78,23 @@ public class Student {
         this.id = Validation.getString(
                 "Enter your ID: ",
                 "Must follow fomat: HE171754",
-                "Your ID not valid",
                 Constant.CONDITION_ID);
         this.studentName = Validation.getString(
                 "Enter student name: ",
                 "Must follow fomat: Minh",
-                "Your name not valid",
                 Constant.CONDITION_STUDENT_NAME);
         this.semester = Validation.getString(
                 "Enter your semester: ",
                 "Must follow fomat just have character and digit",
-                "Your semester not valid",
                 Constant.CONDITION_SEMESTER);
         this.courseName = Validation.getString(
                 "Enter your course name: ",
                 "Must follow fomat: JAVA, .NET, C/C++",
-                "Your course name not valid",
                 Constant.CONDITION_COURSE_NAME);
     }
 
     /**
-     * Use to display imfomation of student
+     * Use to display information of student
      */
     public void display() {
         System.out.printf("%10s| %10s| %10s| %10s| ",
