@@ -78,7 +78,7 @@ public class Student {
         this.id = Validation.getString(
                 "Enter your ID: ",
                 "Must follow fomat: HE171754",
-                Constant.CONDITION_ID);
+                Constant.CONDITION_ID).toUpperCase(null);
         this.studentName = Validation.getString(
                 "Enter student name: ",
                 "Must follow fomat: Minh",

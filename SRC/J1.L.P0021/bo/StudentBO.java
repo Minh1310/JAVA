@@ -77,7 +77,6 @@ public class StudentBO {
         			"Out of range", 
         			"Invalid number", 
         			1, 2);
-        	boolean m = true;
         	if(choice ==1) { 
         		setStudent(student);
         	}else { 
@@ -109,7 +108,7 @@ public class StudentBO {
 						"Enter your ID: ", 
 						"Must follow fomat: HE171754", 
 						Constant.CONDITION_ID);
-				student.setCourseName(id);
+				student.setCourseName(id.toUpperCase());
 				break;
 			case 2:
 				String studentName = Validation.getString(
@@ -130,13 +129,12 @@ public class StudentBO {
 						"Enter your course name: ", 
 						"Must follow fomat: JAVA, .NET, C/C++",
 						Constant.CONDITION_COURSE_NAME);
-				student.setCourseName(courseName.toUpperCase());
+				student.setCourseName(courseName);
 				break;
 			case 5:
 				break;
 			}
 		}
-
 	}
 
     /**
@@ -176,7 +174,7 @@ public class StudentBO {
     /**
      * 
      * @param id
-     * @return a Integer array have value is index searchName
+     * @return a Integer list have value is index of ID
      */
     private List<Integer> searchId(String id) {
     List<Integer> number = new ArrayList<>();
@@ -219,9 +217,9 @@ public class StudentBO {
 						"Enter your semester you want update: ",
 						"Your semester just have character and digit", 
 						Constant.CONDITION_SEMESTER);
-				for (Integer in : listIndex) {
-					if (list.get(in).getSemester().equalsIgnoreCase(semesterUpdate)) {
-						student = list.get(in);
+				for (Integer index : listIndex) {
+					if (list.get(index).getSemester().equalsIgnoreCase(semesterUpdate)) {
+						student = list.get(index);
 						break;
 					}
 				}
@@ -281,11 +279,11 @@ public class StudentBO {
      */
     public void report(String course) {
     	List<Student> listCourse = new ArrayList<>();
-    	Set<String> set = new HashSet<>();
+    	Set<String> uniqueId = new HashSet<>();
     	list.forEach(a -> {
     		if(a.getCourseName().equalsIgnoreCase(course)) {
     			listCourse.add(a);
-    			set.add(a.getId());
+    			uniqueId.add(a.getId());
     		}
     	});	
     	if(listCourse.isEmpty()) {
@@ -299,7 +297,7 @@ public class StudentBO {
 			String id = student.getId();
 			countMap.put(id, countMap.getOrDefault(id, 0) + 1);
 		} 
-        set.forEach( a -> {
+        uniqueId.forEach( a -> {
         	for (Student student : listCourse) {
         		if(a.equalsIgnoreCase(student.getId())) {
         			System.out.printf("%10s|%10s|%10s",
@@ -321,6 +319,7 @@ public class StudentBO {
     public void display(List<Student> list) {
         if (list.isEmpty()) {
             System.out.println("Empty");
+            return;
         }
         list.forEach(a -> {
             a.display();
@@ -334,6 +333,7 @@ public class StudentBO {
     public void display() {
         if (list.isEmpty()) {
             System.out.println("Empty");
+            return;
         }
         list.forEach(a -> {
             a.display();
