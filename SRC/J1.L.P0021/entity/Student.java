@@ -78,11 +78,11 @@ public class Student {
         this.id = Validation.getString(
                 "Enter your ID: ",
                 "Must follow fomat: HE171754",
-                Constant.CONDITION_ID).toUpperCase(null);
+                Constant.CONDITION_ID).toUpperCase();
         this.studentName = Validation.getString(
                 "Enter student name: ",
                 "Must follow fomat: Minh",
-                Constant.CONDITION_STUDENT_NAME);
+                Constant.CONDITION_STUDENT_NAME).trim();
         this.semester = Validation.getString(
                 "Enter your semester: ",
                 "Must follow fomat just have character and digit",

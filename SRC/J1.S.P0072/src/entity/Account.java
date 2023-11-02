@@ -5,10 +5,6 @@
  */
 package entity;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import constant.Constant;
 import utils.Validation;
 
@@ -35,7 +31,7 @@ public class Account {
             String email, String address,
             String dateOfBirth) {
         this.userName = userName;
-        this.password = getMd5(password);
+        this.password = Validation.getMd5(password);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -56,7 +52,7 @@ public class Account {
     }
 
     public void setPassword(String password) {
-        this.password = getMd5(password) ;
+        this.password = Validation.getMd5(password) ;
     }
 
     public String getName() {
@@ -101,98 +97,56 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "userName=" + userName + ", password=" + password + ", name=" + name + ", phone=" + phone + ", email=" + email + ", address=" + address + ", dateOfBirth=" + dateOfBirth + '}';
+        return "Account{" + "userName=" + userName + ", password=" + password 
+                + ", name=" + name + ", phone=" + phone + ", email=" + email 
+                + ", address=" + address + ", dateOfBirth=" + dateOfBirth + '}';
     }
 
     public void input(){
-        String userName = Validation.getString(
+        this.userName = Validation.getString(
                 "Enter user name: ", 
                 "Must have a-zA-Z0-9", 
                 "Invalid String", 
                 Constant.REGEX_USER_NAME);
-        String password = Validation.getString(
+        this.password = Validation.getMd5(
+            Validation.getString(
                 "Enter password: ", 
                 "Must have more than 5 character", 
                 "Invalid String", 
-                Constant.REGEX_PASS_WORD);
-        String passMd5 = getMd5(password);
-        
-        String name = Validation.getString(
+                Constant.REGEX_PASS_WORD)
+        );       
+        this.name = Validation.getString(
                 "Enter your name: ", 
                 "Must have a-zA-Z", 
                 "Invalid String", 
-                Constant.REGEX_NAME);
-        
-        String phone = Validation.getString(
+                Constant.REGEX_NAME);        
+        this.phone = Validation.getString(
                 "Enter your phone: ", 
                 "Must have 10 or 11 number(0-9)", 
                 "Invalid String", 
-                Constant.REGEX_PHONE);
-        
-        String email = Validation.getString(
+                Constant.REGEX_PHONE);      
+        this.email = Validation.getString(
                 "Enter your email: ", 
                 "Must follow format", 
                 "Invalid String", 
-                Constant.REGEX_EMAIL);
-        
-        String address = Validation.getString(
+                Constant.REGEX_EMAIL);       
+        this.address = Validation.getString(
                 "Enter your address: ", 
                 "Must have a-zA-Z0-9", 
                 "Invalid String", 
-                Constant.REGEX_ADDRESS);
-        
-        String dateOfBirth = Validation.getString(
+                Constant.REGEX_ADDRESS);       
+        this.dateOfBirth = Validation.getString(
                 "Enter your date of birth", 
                 "Must have follow dd/mm/yy", 
                 "Invalid String", 
                 Constant.REGEX_DATE_OF_BIRTH);
-        this.userName = userName;
-        this.password = passMd5;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.dateOfBirth = dateOfBirth;
     }
 
     public void display(){
         System.out.printf("|%5s|%5s|%5s|%5s|%5s|%5s|%5s|",
-                        userName,password,name,phone,
-                        email, address, dateOfBirth
+                        this.userName,this.password,this.name,this.phone,
+                        this.email, this.address, this.dateOfBirth
         );
         System.out.println();
     }
-
-    /**
-     * Use to hashing algorithm converts data into a string of 32 characters
-     * 
-     * @param password
-     * @return
-     */
-    public static String getMd5(String password) {
-        try {
-            // Static getInstance method is called with hashing MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            // digest() method is called to calculate message digest
-            // of an input digest() return array of byte
-            byte[] messageDigest = md.digest(password.getBytes());
-
-            // Convert byte array into signum representation
-            BigInteger no = new BigInteger(1, messageDigest);
-
-            // Convert message digest into hex value
-            String hashtext = no.toString(16);
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
-            return hashtext;
-        }
-        // For specifying wrong message digest algorithms
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-
 }

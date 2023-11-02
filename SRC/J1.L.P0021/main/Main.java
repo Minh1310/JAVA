@@ -33,6 +33,7 @@ public class Main {
 						choice1 = Validation.getInt("Enter your choice: ", "Out of range", "Invalid", 1, 2);
 						switch (choice) {
 						case 1:
+							count=0;
 							break;
 						case 2:
 							break;
@@ -43,33 +44,44 @@ public class Main {
 				break;
 			case 2:
 				System.out.println("2");
-				String text = Validation.getString("Enter text: ", "Must follow fomat: Minh",
-						Constant.CONDITION_STUDENT_NAME);
+				String text = Validation.getString(
+					"Enter text: ", 
+					"Must follow fomat: Minh",
+					Constant.CONDITION_STUDENT_NAME);
 				studentBO.display(studentBO.searchName(text));
 				break;
 			case 3:
 				System.out.println("3");
 				int choice3 = 0;
-				String id = Validation.getString("Enter your ID: ", "Must follow fomat: HE171754",
-						Constant.CONDITION_ID);
+				String id = Validation.getString(
+					"Enter your ID: ", 
+					"Must follow fomat: HE171754",
+					Constant.CONDITION_ID);
 				System.out.println("1. Update");
 				System.out.println("2. Delete");
-				choice3 = Validation.getInt("Enter your choice:", "Your choice must be 1 to 5!", "Invalid", 1, 3);
+				choice3 = Validation.getInt(
+					"Enter your choice:", 
+					"Your choice must be 1 to 5!", 
+					"Invalid", 1, 3);
 				switch (choice3) {
 				case 1:
-					System.out.println(studentBO.update(id) ? "Update success" : "Dont exist id or semester of id");
+					System.out.println(studentBO.update(id) ? 
+					"Update success" : "Dont exist id or semester of id");
 					break;
 				case 2:
 					System.out
-							.println(studentBO.remove(id) ? "Remove success" : "Remove fail because dont have this id");
+							.println(studentBO.remove(id) ? 
+							"Remove success" : "Remove fail because dont have this id");
 					break;
 				}
 				studentBO.display();
 				break;
 			case 4:
 				System.out.println("4");
-				String courseName = Validation.getString("Enter your course name: ",
-						"Must follow fomat: JAVA, .NET, C/C++", Constant.CONDITION_COURSE_NAME);
+				String courseName = Validation.getString(
+						"Enter your course name: ",
+						"Must follow fomat: JAVA, .NET, C/C++", 
+						Constant.CONDITION_COURSE_NAME);
 				studentBO.report(courseName);
 				break;
 			case 5:
