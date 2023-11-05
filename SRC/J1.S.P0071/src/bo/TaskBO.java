@@ -77,10 +77,15 @@ public class TaskBO {
     }
     
     public boolean delete(int id){
+        int count = 0;
         for (Task task : list) {
+            count++;
             if(task.getId()==id){
-                list.remove(task);
-                return true;
+                for (int i = count; i < list.size(); i++) {
+                    list.get(i).setId(list.get(i).getId() - 1);
+                }
+                Task.makeID--;
+                return list.remove(task);
             }
         }
         return false;

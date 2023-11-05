@@ -13,7 +13,7 @@ import utils.Validation;
  * @author Nhat Anh
  */
 public class Task {
-    private static int makeID=0;
+    public static int makeID=0;
     private int  id;
     private String name;
     private String taskType;
@@ -130,8 +130,8 @@ public class Task {
      * use to take information of task
      */
     public void input(){
-        int id = makeID;
-        String name = Validation.getString(
+        this.id = makeID;
+        this.name = Validation.getString(
                 "Enter requirement name: ", 
                 "Must have (a-zA_Z0-9)", 
                 "Invalid String", 
@@ -141,57 +141,48 @@ public class Task {
                 "Must from 1 to 4", 
                 "Invalid number", 
                 1, 4);
-        String taskType="";
         switch(taskTypeId){
             case 1:
-                taskType = "Code";
+                this.taskType = "Code";
                 break;
             case 2:
-                taskType = "Test";
+                this.taskType = "Test";
                 break;
             case 3:
-                taskType = "Design";
+                this.taskType = "Design";
                 break;
             case 4:
-                taskType = "Review";
+                this.taskType = "Review";
                 break;
         }
-        String date = Validation.getString(
+        this.date = Validation.getString(
                 "Enter your date: ", 
                 "Must follow dd/mm/yy", 
                 "Invalid String", 
                 Constant.REGEX_DATE_OF_BIRTH);
-        double planFrom,planTo,time;
         do{
-            planFrom = Validation.getDouble(
+            this.from = Validation.getDouble(
                     "Enter time from: ", 
                     "Must from 8 to 17.5", 
                     "Invalid number", 
                     8, 17.5);
-            planTo = Validation.getDouble(
+            this.to = Validation.getDouble(
                     "Enter time to: ", 
                     "Must from 8 to 17.5", 
                     "Invalid number", 
                     8, 17.5);
-            time = planTo - planFrom;
-        } while(planFrom >= planTo); 
-        String assignee = Validation.getString(
+            this.time = this.to - this.from;
+        } while(this.from >= this.to); 
+        this.assignee = Validation.getString(
                 "Enter assignee name: ", 
                 "Must have (a-zA_Z0-9)", 
                 "Invalid String", 
                 Constant.REGEX_NAME);
-        String reviewer = Validation.getString(
+        this.reviewer = Validation.getString(
                 "Enter reviewer name: ", 
                 "Must have (a-zA_Z0-9)", 
                 "Invalid String", 
                 Constant.REGEX_NAME);
-        this.id = id;
-        this.name = name;
-        this.taskType = taskType;
-        this.date = date;
-        this.time = time;
-        this.assignee = assignee;
-        this.reviewer = reviewer;
 
     }   
 }

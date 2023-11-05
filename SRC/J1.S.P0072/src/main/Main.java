@@ -73,7 +73,18 @@ public class Main {
                             System.out.println("");
                             switch (choice2) {
                                 case 1:
-                                    System.out.println(accountBO.setPassword(k) ? "update oki" : "Update fail");
+                                    String oldPass = Validation.getMd5(
+                                        Validation.getString(
+                                            "Enter old password: ",
+                                            "Must have a-zA-Z0-9",
+                                            "Invalid String",
+                                            Constant.REGEX_PASS_WORD)
+                                    ); 
+
+                                    choice2 = accountBO.setPassword(k,oldPass) ? 2 :1;
+                                     
+                                    System.out.println(choice == 2 ?"Update okila": "Fail");
+                                
                                     break;
                                 case 2:
                                     break;
@@ -83,7 +94,6 @@ public class Main {
                         System.out.println("Login fail");
                     }
                     accountBO.display();
-                    ;
                     break;
                 case 3:
                     System.out.println("have a nice day");

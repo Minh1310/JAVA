@@ -22,7 +22,7 @@ public class AccountBO {
         list = new ArrayList<>();
         list.add(new Account(
                 "minhDepTrai",
-                "minh1310",
+                "Minh1",
                 "Minh handsome",
                 "1234567890",
                 "minhbqhe171754@fpt.edu.vn",
@@ -66,12 +66,13 @@ public class AccountBO {
         Account account = new Account();
         account.input();
         while (exist(account.getUserName())) {
-            String userName = Validation.getString(
+            account.setUserName(
+                Validation.getString(
                     "Enter user name: ",
                     "Must have a-zA-Z0-9",
                     "Invalid String",
-                    Constant.REGEX_USER_NAME);
-            account.setUserName(userName);
+                    Constant.REGEX_USER_NAME)
+            );
         }
         return list.add(account);
     }
@@ -94,14 +95,7 @@ public class AccountBO {
         return -1;
     }
 
-    public boolean setPassword(int index) {
-        String oldPass = Validation.getMd5(
-            Validation.getString(
-                "Enter old password: ",
-                "Must have a-zA-Z0-9",
-                "Invalid String",
-                Constant.REGEX_PASS_WORD)
-        );      
+    public boolean setPassword(int index, String oldPass) {     
         if (list.get(index).getPassword().equals(oldPass)) {
             do{
                 String newPass = Validation.getString(
@@ -115,7 +109,7 @@ public class AccountBO {
                     "Invalid String",
                     Constant.REGEX_PASS_WORD);
                 if (newPass.equals(renewPass)) {
-                    list.get(index).setPassword(Validation.getMd5(newPass));
+                    list.get(index).setPassword(newPass);
                     return true;
                 }
                 System.out.println(messageNotMatchPassword);

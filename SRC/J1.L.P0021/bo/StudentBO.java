@@ -73,12 +73,6 @@ public class StudentBO {
                 !ls.getStudentName().equalsIgnoreCase(name)));
     }
 
-    private boolean exist(String id, String semester, String course) {
-        return list.stream().anyMatch(ls -> (ls.getId().equalsIgnoreCase(id) &&
-                ls.getSemester().equalsIgnoreCase(semester) &&
-                ls.getCourseName().equalsIgnoreCase(course)));
-    }
-
     /**
      * Use to check student is valid 
      * 
@@ -89,12 +83,12 @@ public class StudentBO {
         if (exist(student.getId(), student.getStudentName())) {
             System.out.println(messageNameNotMatchWithId);
             student.setStudentName(
-                    Validation.getString(
-                            "Student name must is: " +
-                            list.get(searchId(student.getId()).get(0)).getStudentName(),
-                            "Name must is " +
-                            list.get(searchId(student.getId()).get(0)).getStudentName(),
-                            list.get(searchId(student.getId()).get(0)).getStudentName()).trim());
+                Validation.getString(
+                    "Student name must is: " +
+                    list.get(searchId(student.getId()).get(0)).getStudentName(),
+                    "Name must is " +
+                    list.get(searchId(student.getId()).get(0)).getStudentName(),
+                    list.get(searchId(student.getId()).get(0)).getStudentName()).trim());
         }
 
         while (exist(student)) {
@@ -202,7 +196,6 @@ public class StudentBO {
             index++;
         }
         int choice = 0;
-        int count = 0;
         Student student = null;
         while (choice != 3) {
             System.out.println("1. update name");
@@ -213,14 +206,13 @@ public class StudentBO {
                     "Your choice must be 1 to 4!",
                     "Number is not valid!",
                     1, 3);
-            if (choice == 2 && count == 0) {
+            if (choice == 2) {
                 int positionChange = Validation.getInt(
                         "Enter number line you want update: ",
                         "Out of range",
                         "Invalid number",
-                        0, listIndex.size());
+                        0, listIndex.size()-1);
                 student = list.get(listIndex.get(positionChange));
-                count++;
             }
             switch (choice) {
                 case 1:
@@ -233,23 +225,23 @@ public class StudentBO {
                     });
                     break;
                 case 2:
-                    String semester, courseName;
                     do {
-                        semester = Validation.getString(
+                        student.setSemester( 
+                            Validation.getString(
                                 "Enter new your semester: ",
                                 "Your semester just have character and digit",
-                                Constant.CONDITION_SEMESTER);
-                        courseName = Validation.getString(
+                                Constant.CONDITION_SEMESTER)
+                        );
+                        student.setCourseName( Validation.getString(
                                 "Enter new your course name: ",
                                 "Must follow fomat: JAVA, .NET, C/C++",
-                                Constant.CONDITION_COURSE_NAME);
-                        if (!exist(student.getId(), semester, courseName)) {
+                                Constant.CONDITION_COURSE_NAME)
+                        );
+                        if (!exist(student)) {
                             break;
                         }
                         System.out.println(Constant.messageStudentExist);
                     } while (true);
-                    student.setSemester(semester);
-                    student.setCourseName(courseName);
                     break;
                 case 3:
                     break;

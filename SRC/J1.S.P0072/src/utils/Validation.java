@@ -112,4 +112,7 @@ public class Validation {
             throw new RuntimeException(e);
         }
     }
+    public static void main(String[] args) {
+        System.out.println(getMd5("minh123"));
+    }
 }
