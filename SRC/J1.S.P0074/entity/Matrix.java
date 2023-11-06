@@ -36,31 +36,37 @@ public void setColumn(int column) {
 public void inputValue(){
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) {
-            matrix[i][j] = Validation.getInt(
+            this.matrix[i][j] = Validation.getInt(
                     "Element matrix " + "[" + (i + 1) + "]" + "[" + (j + 1) + "]" + "=",
                     "Number is out of range!",
                     "Must be integer number",
-                    0, 50/0);
+                    0, Integer.MAX_VALUE);
         }
     }
 }
 
 public void input(int row, int column) {
-    this.row = row;
-    this.column = column;
-    this.matrix = new int[row][column];
+    this.row = Validation.getInt(
+            "Enter your row", 
+            "Out range", "Invalid number", 
+            1, row);
+    this.column = Validation.getInt(
+            "Enter your column", 
+            "Out range", "Invalid number", 
+            1, column);
+    this.matrix = new int[this.row][this.column];
 }
 
 /**
      * Use to display  matrix
      */
     public void display(){
-        if(matrix == null){
+        if(this.matrix == null){
             System.out.println("Null");
             return;
         }
-        for (int[] ls : matrix) {
-            for (int j = 0; j < matrix[0].length; j++) {
+        for (int[] ls : this.matrix) {
+            for (int j = 0; j < column; j++) {
                 System.out.print("[" + ls[j] + "]");
             }
             System.out.println("");
