@@ -58,38 +58,46 @@ public class Main {
                             "Must have more than 5 character",
                             "Invalid String",
                             Constant.REGEX_PASS_WORD);
-                    accountBO.display();
                     int k = accountBO.login(userName, password);
                     System.out.println("--------");
                     if (k >= 0) {
-                        int choice2=0;
-                        do{
-                            choice2 = Validation.getInt(
-                                    accountBO.getList().get(k).getName() +
-                                    ", Do you want change your password(Y-1/N-2)",
-                                    "Must from 1-2",
-                                    "Invalid String",
-                                    1,2);
-                            System.out.println("");
-                            switch (choice2) {
-                                case 1:
-                                    String oldPass = Validation.getMd5(
-                                        Validation.getString(
-                                            "Enter old password: ",
-                                            "Must have a-zA-Z0-9",
-                                            "Invalid String",
-                                            Constant.REGEX_PASS_WORD)
-                                    ); 
-
-                                    choice2 = accountBO.setPassword(k,oldPass) ? 2 :1;
-                                     
-                                    System.out.println(choice == 2 ?"Update okila": "Fail");
-                                
+                        int choice2 = Validation.getInt(
+                                accountBO.getList().get(k).getName() +
+                                        ", Do you want change your password(Y-1/N-2)",
+                                "Must from 1-2",
+                                "Invalid number",
+                                1, 2);
+                        System.out.println("");
+                        if (choice2 == 1) {
+                            do {
+                                String oldPass = Validation.getString(
+                                        "Enter old password: ",
+                                        "Must have a-zA-Z0-9",
+                                        "Invalid String",
+                                        Constant.REGEX_PASS_WORD);
+                                if (accountBO.checkPassword(k, oldPass)) {
                                     break;
-                                case 2:
+                                }
+                                System.out.println(Constant.MESSAGE_WRONG_PASSWORD);
+                            } while (true);
+                            do {
+                                String newPass = Validation.getString(
+                                        "Enter new password: ",
+                                        "Must have a-zA-Z0-9",
+                                        "Invalid String",
+                                        Constant.REGEX_PASS_WORD);
+                                String renewPass = Validation.getString(
+                                        "Enter renew password: ",
+                                        "Must have a-zA-Z0-9",
+                                        "Invalid String",
+                                        Constant.REGEX_PASS_WORD);
+                                if (accountBO.setPassword(k, newPass, renewPass)) {
+                                    System.out.println("Update successful");
                                     break;
-                            }
-                        } while(choice2!=2);
+                                }
+                                System.out.println(Constant.MESSAGE_NEW_PASSWORD_NOT_MATCH);
+                            } while (true);
+                        }
                     } else {
                         System.out.println("Login fail");
                     }

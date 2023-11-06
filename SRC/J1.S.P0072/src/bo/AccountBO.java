@@ -5,7 +5,6 @@
  */
 package bo;
 
-import constant.Constant;
 import entity.Account;
 import utils.Validation;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import java.util.List;
  */
 public class AccountBO {
     private List<Account> list;
-    private String messageNotMatchPassword = "New password not match each other";
     public AccountBO() {
         list = new ArrayList<>();
         list.add(new Account(
@@ -45,35 +43,11 @@ public class AccountBO {
 
     /**
      * 
-     * @param list
-     * @param userName
-     * @return
-     */
-    private boolean exist(String userName) {
-        for (Account ls : list) {
-            if (ls.getUserName().equals(userName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 
      * @return
      */
     public boolean add() {
         Account account = new Account();
-        account.input();
-        while (exist(account.getUserName())) {
-            account.setUserName(
-                Validation.getString(
-                    "Enter user name: ",
-                    "Must have a-zA-Z0-9",
-                    "Invalid String",
-                    Constant.REGEX_USER_NAME)
-            );
-        }
+        account.input(list);
         return list.add(account);
     }
 
@@ -95,27 +69,17 @@ public class AccountBO {
         return -1;
     }
 
-    public boolean setPassword(int index, String oldPass) {     
-        if (list.get(index).getPassword().equals(oldPass)) {
-            do{
-                String newPass = Validation.getString(
-                    "Enter new password: ",
-                    "Must have a-zA-Z0-9",
-                    "Invalid String",
-                    Constant.REGEX_PASS_WORD);
-                String renewPass = Validation.getString(
-                    "Enter renew password: ",
-                    "Must have a-zA-Z0-9",
-                    "Invalid String",
-                    Constant.REGEX_PASS_WORD);
-                if (newPass.equals(renewPass)) {
-                    list.get(index).setPassword(newPass);
-                    return true;
-                }
-                System.out.println(messageNotMatchPassword);
-            } while(true);      
+    public boolean checkPassword(int index, String oldPass){
+        return list.get(index).getPassword().equals(Validation.getMd5(oldPass));
+    }
+
+    public boolean setPassword(int index,String newPass,String renewPass) {     
+        if (newPass.equals(renewPass)) {
+            list.get(index).setPassword(newPass);
+            return true;
         }
         return false;
+               
     }
 
     public void display(){

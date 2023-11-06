@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.List;
+
 import constant.Constant;
 import utils.Validation;
 
@@ -102,12 +104,18 @@ public class Account {
                 + ", address=" + address + ", dateOfBirth=" + dateOfBirth + '}';
     }
 
-    public void input(){
-        this.userName = Validation.getString(
+    public void input(List<Account> list){
+        do{
+            this.userName = Validation.getString(
                 "Enter user name: ", 
                 "Must have a-zA-Z0-9", 
                 "Invalid String", 
                 Constant.REGEX_USER_NAME);
+            if(!exist(list)){
+                break;
+            }
+            System.out.println(Constant.MESSAGE__USER_EXIST);
+        } while(true);
         this.password = Validation.getMd5(
             Validation.getString(
                 "Enter password: ", 
@@ -140,6 +148,12 @@ public class Account {
                 "Must have follow dd/mm/yy", 
                 "Invalid String", 
                 Constant.REGEX_DATE_OF_BIRTH);
+    }
+
+    private boolean exist(List<Account> list){
+        return list.stream().anyMatch( ls -> (
+            ls.getUserName().equals(this.userName)
+        ));
     }
 
     public void display(){

@@ -11,6 +11,12 @@ package constant;
  */
 public class Constant {
 
+    public static final String MESSAGE__USER_EXIST = "User name already exist ";
+
+    public static final String MESSAGE_WRONG_PASSWORD = "Password not valid";
+
+    public static final String MESSAGE_NEW_PASSWORD_NOT_MATCH = "New pass not match with renew pass";
+
     public static final String REGEX_USER_NAME = "^[a-zA-Z0-9]{1,}$";
 
     public static final String REGEX_PASS_WORD = "^[a-zA-Z0-9]{5,}$";

@@ -33,6 +33,7 @@ public class Main {
                 System.out.println(taskBO.add()? "Success" : "fail");    
                 break;
             case 2:
+                taskBO.display();
                 int min = taskBO.getList().get(0).getId();
                 int max = taskBO.getList().get(taskBO.getList().size()-1).getId();
                 int id = Validation.getInt(

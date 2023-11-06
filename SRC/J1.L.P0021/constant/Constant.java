@@ -13,6 +13,10 @@ public class Constant {
 	
 	public static final String messageStudentExist ="Student exist";
 
+    public static final String NOT_EXIST_ID = "ID not exist";
+
+    public static final String messageNameNotMatchWithId ="Wrong name";
+
     public static final String CONDITION_ID = "^(?i)(HE|HS)\\d{6}$";
     
     public static final String CONDITION_SEMESTER = "^[a-zA-Z0-9]{1,}$";

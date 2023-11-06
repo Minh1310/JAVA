@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.List;
+
 import constant.Constant;
 import utils.Validation;
 
@@ -13,7 +15,6 @@ import utils.Validation;
  * @author Nhat Anh
  */
 public class Task {
-    public static int makeID=0;
     private int  id;
     private String name;
     private String taskType;
@@ -41,14 +42,12 @@ public class Task {
     }
 
     public Task() {
-        makeID++;
     }
 
-    public Task(String name, String taskType, String date, double from,
+    public Task(int id, String name, String taskType, String date, double from,
                 double to, String assignee, String reviewer
             ) {
-        makeID++;
-        this.id = makeID;
+        this.id = id;
         this.name = name;
         this.taskType = taskType;
         this.date = date;
@@ -129,8 +128,8 @@ public class Task {
     /**
      * use to take information of task
      */
-    public void input(){
-        this.id = makeID;
+    public void input(List<Task> list){
+        this.id = list.size() + 1;
         this.name = Validation.getString(
                 "Enter requirement name: ", 
                 "Must have (a-zA_Z0-9)", 

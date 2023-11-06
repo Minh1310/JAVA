@@ -19,10 +19,10 @@ public class TaskBO {
 
      public TaskBO() {
         list = new ArrayList<>();
-        list.add(new Task("Dev Program", "Code", "28/08/2015", 7.5,16, "Dev", "Lead"));
-        list.add(new Task("Dev Program", "Code", "29/08/2015", 7,15, "Dev", "Lead"));
-        list.add(new Task("Dev Program", "Code", "30/08/2015", 10, 17, "Dev", "Lead"));
-        list.add(new Task("Dev Program", "Code", "31/08/2015", 11,13, "Dev", "Lead"));
+        list.add(new Task(1,"Dev Program", "Code", "28/08/2015", 7.5,16, "Dev", "Lead"));
+        list.add(new Task(2,"Dev Program", "Code", "29/08/2015", 7,15, "Dev", "Lead"));
+        list.add(new Task(3,"Dev Program", "Code", "30/08/2015", 10, 17, "Dev", "Lead"));
+        list.add(new Task(4,"Dev Program", "Code", "31/08/2015", 11,13, "Dev", "Lead"));
     }
     
     public TaskBO(List<Task> list) {
@@ -67,12 +67,8 @@ public class TaskBO {
      */
     public boolean add(){
         Task task = new Task();
-        task.input();
-        if(exist(task)){
-            return false;
-        }
-        list.add(task);
-        return true;
+        task.input(list);
+        return list.add(task);
         
     }
     
@@ -84,7 +80,6 @@ public class TaskBO {
                 for (int i = count; i < list.size(); i++) {
                     list.get(i).setId(list.get(i).getId() - 1);
                 }
-                Task.makeID--;
                 return list.remove(task);
             }
         }
