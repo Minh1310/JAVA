@@ -195,6 +195,9 @@ public class StudentBO {
             return -1;
         }
         List<Integer> listIndex = searchId(id);
+        if(listIndex.isEmpty()){
+            return -1;
+        }
         int index = 1;
             for (Integer integer : listIndex) {
                 System.out.print(index + ". ");
